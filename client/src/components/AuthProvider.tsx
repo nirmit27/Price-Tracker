@@ -3,9 +3,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { User } from "@supabase/supabase-js";
 
 const AuthContext = createContext<{
-  user: any | null;
+  user: User | null;
   signOut: () => Promise<void>;
 }>({
   user: null,
@@ -15,7 +16,7 @@ const AuthContext = createContext<{
 export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
   const supabase = createClientComponentClient();
 
