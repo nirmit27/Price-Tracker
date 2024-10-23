@@ -1,42 +1,29 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
+import { Navbar } from "@/components/Navbar";
+// import Footer from "@/components/Footer";
+import { AuthProvider } from "@/components/AuthProvider";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "PriceTracker",
-  description: "An e-commerce price tracking web application.",
+  description: "Track prices across multiple e-commerce platforms",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+      <body className={inter.className}>
+        <AuthProvider>
+          <Navbar />
+          <main>{children}</main>
+          {/* <Footer /> */}
+        </AuthProvider>
       </body>
     </html>
   );
